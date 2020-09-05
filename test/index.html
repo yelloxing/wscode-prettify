@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>使用测试</title>
     <script src="../node_modules/wscode/dist/wscode.js"></script>
+    <script src="../dist/wscode-prettify.js"></script>
     <link rel="shortcut icon" href="../logo.png">
     <style>
         body {
@@ -27,7 +28,12 @@
 
         new WSCode({
 
-            el: document.getElementById('root')
+            el: document.getElementById('root'),
+
+            content: "<html lang=\"zh-cn\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Example | Web Studio Code</title>\n    <style>\n        /*css样式*/\n        body {\n            margin: 0px;\n        }\n    </style>\n</head>\n<body>\n    <script>\n\n        /*js代码*/\n        function doit() {\n            console.log('你好，世界！');\n        }\n\n    \</script\>\n</body>\n</html>\n\n<!-- Developed by 心叶（yelloxing@gmail.com） -->",
+
+            // 着色器
+            shader: prettify
 
         });
 

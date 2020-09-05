@@ -1,6 +1,6 @@
 {
   "name": "wscode-prettify",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha",
   "description": "为 Web Studio Cdoe 提供的通用代码着色插件",
   "main": "dist/wscode-prettify.min.js",
   "scripts": {
