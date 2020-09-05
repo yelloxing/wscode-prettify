@@ -13,7 +13,7 @@
 首先，需要引入，你可以选择使用script标签引入：
 
 ```html
-    <script src="https://cdn.jsdelivr.net/npm/wscode-prettify"></script>
+<script src="https://cdn.jsdelivr.net/npm/wscode-prettify"></script>
 ```
 
 上面的方式引入以后，通过prettify即可使用。当然，你也可以通过npm的方式引入：
@@ -24,7 +24,9 @@ npm install --save wscode-prettify
 
 安装好了以后，在需要的地方引入即可：
 
+```js
 import prettify from 'wscode-prettify';
+```
 
 ## 如何使用
 
