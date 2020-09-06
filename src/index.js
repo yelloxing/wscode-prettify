@@ -38,14 +38,16 @@ let prettify = function (codeStr) {
     while (true) {
 
         // 注释
-        if (["//", '/*'].indexOf(nextNValue(2)) > -1) {
+        if (["//", '/*'].indexOf(nextNValue(2)) > -1 || ["<!--"].indexOf(nextNValue(4)) > -1) {
             pushWord(colors.nml);
 
             // 寻找结束标记
             let endInfo = {
                 "//": [1, '\n'],
                 "/*": [2, '*/']
-            }[nextNValue(2)];
+            }[nextNValue(2)] || {
+                "<!--": [3, '-->']
+            }[nextNValue(4)];
 
             do {
                 template += codeStr[index++];
@@ -71,6 +73,32 @@ let prettify = function (codeStr) {
             pushWord(colors.str);
 
         }
+
+        // 关键字
+        else if ((nextNValue(1) == ' ' || specialWord.bdr.indexOf(nextNValue(1)) > -1) && specialWord.kwd.indexOf(template.trim()) > -1) {
+
+            pushWord(colors.kwd);
+            template += codeStr[index++];
+
+        }
+
+        // 数字
+        else if ((nextNValue(1) == ' ' || specialWord.bdr.indexOf(nextNValue(1)) > -1) && (!/\d/.test(nextNValue(1))) && /^\d{1,}$/.test(template.trim())) {
+
+            pushWord(colors.num);
+            template += codeStr[index++];
+
+        }
+
+        // 边界
+        else if (specialWord.bdr.indexOf(nextNValue(1)) > -1) {
+            pushWord(colors.nml);
+
+            template += codeStr[index++];
+            pushWord(colors.bdr);
+        }
+
+
 
         // 如果过界了
         else if (index >= codeStr.length) {

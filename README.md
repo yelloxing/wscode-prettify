@@ -8,6 +8,8 @@
   <a href="https://github.com/yelloxing/wscode-prettify/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/wscode-prettify.svg" alt="License"></a>
 </p>
 
+- 欢迎有任何意见来[Github Issue](https://github.com/yelloxing/wscode-prettify/issues)告诉我们！
+
 ## 如何引入
 
 首先，需要引入，你可以选择使用script标签引入：

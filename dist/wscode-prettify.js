@@ -5,14 +5,14 @@
 * 
 * author 心叶
 *
-* version 0.0.0-alpha
+* version 0.1.0
 * 
 * build Fri Sep 04 2020
 *
 * Copyright 心叶
 * Released under the MIT license
 * 
-* Date:Sun Sep 06 2020 01:15:06 GMT+0800 (GMT+08:00)
+* Date:Sun Sep 06 2020 09:04:07 GMT+0800 (GMT+08:00)
 */
         
 (function () {
@@ -34,6 +34,13 @@
     return _typeof(obj);
   }
 
+  var specialWord = {
+    // 关键字
+    kwd: ["abstract", "arguments", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with", "yield", 'as'],
+    // 边界
+    bdr: [";", '{', '}', '(', ')', '.', '\n', '=', '+', '>', '<', '[', ']', '-', '*', '/', '^', '*', '!', ':', ',', '\n']
+  };
+
   var colors = {
     // 普通文本
     nml: "#065b9f",
@@ -42,7 +49,11 @@
     // 关键字
     kwd: "#919f06",
     // 注释
-    com: '#9E9E9E'
+    com: '#9E9E9E',
+    // 边界
+    bdr: "#660",
+    // 数字
+    num: "#E91E63"
   };
 
   var prettify = function prettify(codeStr) {
@@ -76,13 +87,15 @@
 
     while (true) {
       // 注释
-      if (["//", '/*'].indexOf(nextNValue(2)) > -1) {
+      if (["//", '/*'].indexOf(nextNValue(2)) > -1 || ["<!--"].indexOf(nextNValue(4)) > -1) {
         pushWord(colors.nml); // 寻找结束标记
 
         var endInfo = {
           "//": [1, '\n'],
           "/*": [2, '*/']
-        }[nextNValue(2)];
+        }[nextNValue(2)] || {
+          "<!--": [3, '-->']
+        }[nextNValue(4)];
 
         do {
           template += codeStr[index++];
@@ -101,14 +114,27 @@
 
           goNextN(1);
           pushWord(colors.str);
-        } // 如果过界了
-        else if (index >= codeStr.length) {
-            pushWord(colors.nml);
-            break;
-          } // 不然的话，追加
-          else {
+        } // 关键字
+        else if ((nextNValue(1) == ' ' || specialWord.bdr.indexOf(nextNValue(1)) > -1) && specialWord.kwd.indexOf(template.trim()) > -1) {
+            pushWord(colors.kwd);
+            template += codeStr[index++];
+          } // 数字
+          else if ((nextNValue(1) == ' ' || specialWord.bdr.indexOf(nextNValue(1)) > -1) && !/\d/.test(nextNValue(1)) && /^\d{1,}$/.test(template.trim())) {
+              pushWord(colors.num);
               template += codeStr[index++];
-            }
+            } // 边界
+            else if (specialWord.bdr.indexOf(nextNValue(1)) > -1) {
+                pushWord(colors.nml);
+                template += codeStr[index++];
+                pushWord(colors.bdr);
+              } // 如果过界了
+              else if (index >= codeStr.length) {
+                  pushWord(colors.nml);
+                  break;
+                } // 不然的话，追加
+                else {
+                    template += codeStr[index++];
+                  }
     } // 最后，我们需要变成wscode需要的着色器格式
 
 

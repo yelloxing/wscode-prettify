@@ -10,6 +10,12 @@ export default {
     kwd: "#919f06",
 
     // 注释
-    com: '#9E9E9E'
+    com: '#9E9E9E',
+
+    // 边界
+    bdr: "#660",
+
+    // 数字
+    num: "#E91E63"
 
 };

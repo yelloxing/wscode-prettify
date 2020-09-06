@@ -13,6 +13,10 @@ export default {
         "short", "static", "super", "switch", "synchronized",
         "this", "throw", "throws", "transient", "true",
         "try", "typeof", "var", "void", "volatile",
-        "while", "with", "yield"]
+        "while", "with", "yield", 'as'],
+
+    // 边界
+    bdr: [";", '{', '}', '(', ')', '.', '\n', '=', '+', '>',
+        '<', '[', ']', '-', '*', '/', '^', '*', '!', ':', ',', '\n']
 
 };
